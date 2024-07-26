@@ -13,5 +13,7 @@ int main() {
 
   list_print(l1);
 
+  list_free(l1);
+
   return 0;
 }

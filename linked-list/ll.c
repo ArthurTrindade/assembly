@@ -22,6 +22,20 @@ list_t *list_new() {
   return new_list;
 }
 
+void list_free(list_t *l) {
+    node_t *n = l->head;
+
+    node_t *aux;
+    while (n != NULL) {
+        aux = n;
+        n   = n->next;
+        free(aux);
+    }
+
+    free(l);
+    return;
+}
+
 void list_insert(list_t *l, int data) {
 
   node_t *new_node = node_new(data);
@@ -37,6 +51,7 @@ void list_insert(list_t *l, int data) {
   }
 
   aux->next = new_node;
+  return;
 }
 
 void list_print(list_t *l) {

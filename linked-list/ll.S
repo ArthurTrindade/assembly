@@ -36,6 +36,42 @@ list_new:
     leave
     ret
 
+.globl list_free
+list_free:
+    pushq %rbp
+    movq  %rsp, %rbp
+    subq  $32,  %rsp
+
+    movq %r12,  -8(%rbp)
+    movq %r13, -16(%rbp)
+
+    movq (%rdi), %r12
+
+loop3:
+    cmpq $0, %r12
+    je endloop3
+
+    movq   %r12,  %r13
+    movq 8(%r12), %r12
+
+    movq %rdi, -24(%rbp) 
+
+    movq %r13, %rdi
+    call free
+
+    movq -24(%rbp), %rdi
+
+    jmp loop3
+endloop3: 
+
+    call free
+
+    movq  -8(%rbp), %r12
+    movq -16(%rbp), %r13
+
+    leave
+    ret
+
 .globl list_insert
 list_insert:
     pushq %rbp
